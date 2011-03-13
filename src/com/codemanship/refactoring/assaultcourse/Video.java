@@ -25,12 +25,12 @@ public class Video {
 	}
 
 	public void rentFor(Customer customer) throws CustomerUnderageException {
-		if(isUnderAge(customer))
+		if(isUnderAge(customer, rating))
 			throw new CustomerUnderageException();
 		customer.addRental(this);
 	}
 
-	private boolean isUnderAge(Customer customer) {
+	private boolean isUnderAge(Customer customer, Rating rating) {
 
 			try {
 				// calculate customer's age in years and months
