@@ -1,0 +1,38 @@
+<project name="ASSAULT_COURSE" default="test">
+	
+	<property name="classes.dir" location="./bin"/>
+	<property name="src.dir" location="./src"/>
+	<property name="test.dir" location="./test"/>
+	<property name="build.dir" location="./build"/>
+	<property name="packages.dir" location="${user.home}/Library/Packages"/>
+	
+	<path id="class.path">
+		<pathelement path="${classes.dir}"/>
+		<pathelement location="${packages.dir}/junit4.8.2/junit-4.8.2.jar"/>
+    </path>
+	
+	<target name="compile">
+		<delete dir="${classes.dir}"/>
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
+		<javac srcdir="${test.dir}" destdir="${classes.dir}" classpathref="class.path" includeantruntime="false"/>
+	</target>
+	
+	<target name="test" depends="compile">
+		<delete dir="${build.dir}"/>
+		<mkdir dir="${build.dir}"/>
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath>
+				<path refid="class.path"/>
+			</classpath>
+
+			<formatter type="plain"/>
+
+			<batchtest fork="yes" todir="${build.dir}">
+				<fileset dir="${test.dir}">
+					<include name="**/*Tests.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+</project>
