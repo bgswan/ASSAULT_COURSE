@@ -70,15 +70,12 @@ public class Customer {
 		Calendar today = Calendar.getInstance();
 		today.setTime(new java.util.Date());  
 		
-		// calculate age different in years and months
-		int ageYr = (today.get(Calendar.YEAR) - dob.get(Calendar.YEAR));   
-		int ageMo = (today.get(Calendar.MONTH) - dob.get(Calendar.MONTH));
+		int age = (today.get(Calendar.YEAR) - dob.get(Calendar.YEAR));   
 		
-		// decrement age in years if month difference is negative
-		if (ageMo < 0)   
+		if (dob.get(Calendar.MONTH) > today.get(Calendar.MONTH))   
 		{   
-			ageYr--;   
+			age--;   
 		}      
-		return ageYr;
+		return age;
     }
 }
