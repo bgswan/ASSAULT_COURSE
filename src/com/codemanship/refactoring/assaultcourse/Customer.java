@@ -44,19 +44,7 @@ public class Customer {
 	}
 	
 	public boolean isUnderAge(Rating rating) {
-		int age = getAge();
-
-		// determine if customer is under legal age for rating
-		switch(rating){
-		case TWELVE:
-			return age < 12;
-		case FIFTEEN:
-			return age < 15;
-		case EIGHTEEN:
-			return age < 18;
-		default:
-			return false;
-		}
+		return getAge() < rating.getMinimumAge();
 	}
     
     private int getAge()
