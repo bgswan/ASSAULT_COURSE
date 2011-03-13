@@ -11,18 +11,23 @@ public class Customer {
 	
 	private List<Video> rentals = new ArrayList<Video>();
 	private Address address;
-	private final String dateOfBirth;
+	private final Date dateOfBirth;
 	private final String name;
 
 
 	public Customer(String name, Address address, String dateOfBirth) {
 		this.name = name;
 		this.address = address;
-		this.dateOfBirth = dateOfBirth;
+		try {
+		    this.dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirth);
+		}
+		catch(ParseException e) {
+		    throw new IllegalArgumentException("Not a valid date: " + dateOfBirth);
+		}		
 	}
 
 	public String getDateOfBirth() {
-		return dateOfBirth;
+		return dateOfBirth.toString();
 	}
 	
 	public List<Video> getRentedVideos() {
@@ -39,33 +44,25 @@ public class Customer {
 	}
 	
 	public boolean isUnderAge(Rating rating) {
+		int age = getAge();
 
-		try {
-			int age = getAge();
-
-			// determine if customer is under legal age for rating
-			switch(rating){
-			case TWELVE:
-				return age < 12;
-			case FIFTEEN:
-				return age < 15;
-			case EIGHTEEN:
-				return age < 18;
-			default:
-				return false;
-			}
-		
-		} catch (ParseException e) {
-			e.printStackTrace();
+		// determine if customer is under legal age for rating
+		switch(rating){
+		case TWELVE:
+			return age < 12;
+		case FIFTEEN:
+			return age < 15;
+		case EIGHTEEN:
+			return age < 18;
+		default:
+			return false;
 		}
-		return false;		
-
 	}
     
-    private int getAge() throws ParseException
+    private int getAge()
     {
 		Calendar dob = Calendar.getInstance();
-		dob.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(getDateOfBirth()));
+		dob.setTime(this.dateOfBirth);
 		
 		Calendar today = Calendar.getInstance();
 		today.setTime(new java.util.Date());  
