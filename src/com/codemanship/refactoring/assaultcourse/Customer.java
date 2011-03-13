@@ -64,19 +64,15 @@ public class Customer {
     
     private int getAge() throws ParseException
     {
-        // calculate customer's age in years and months
+		Calendar dob = Calendar.getInstance();
+		dob.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(getDateOfBirth()));
 		
-		// parse customer date of birth
-		Calendar calDateOfBirth = Calendar.getInstance();
-		calDateOfBirth.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(getDateOfBirth()));
-		
-		// get current date
-		Calendar calNow = Calendar.getInstance();
-		calNow.setTime(new java.util.Date());  
+		Calendar today = Calendar.getInstance();
+		today.setTime(new java.util.Date());  
 		
 		// calculate age different in years and months
-		int ageYr = (calNow.get(Calendar.YEAR) - calDateOfBirth.get(Calendar.YEAR));   
-		int ageMo = (calNow.get(Calendar.MONTH) - calDateOfBirth.get(Calendar.MONTH));
+		int ageYr = (today.get(Calendar.YEAR) - dob.get(Calendar.YEAR));   
+		int ageMo = (today.get(Calendar.MONTH) - dob.get(Calendar.MONTH));
 		
 		// decrement age in years if month difference is negative
 		if (ageMo < 0)   
